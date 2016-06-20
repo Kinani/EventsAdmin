@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EventsAdmin.Models;
+using Microsoft.WindowsAzure.MobileServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,15 +24,21 @@ namespace EventsAdmin
     /// </summary>
     sealed partial class App : Application
     {
-        /// <summary>
-        /// Initializes the singleton application object.  This is the first line of authored code
-        /// executed, and as such is the logical equivalent of main() or WinMain().
-        /// </summary>
+        public static Event ChosenEvent;
+        public static string ChosenEventIdForSession = string.Empty;
+        public static string ChosenEventEventNameForSession = string.Empty; // Temp only
+        public static string TempDescripForUpdatePage = string.Empty;
+        public static string EventIDForSesionsDelete = string.Empty;
         public App()
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
+
+        public static MobileServiceClient MobileService = new MobileServiceClient(
+          "https://dpe.azure-mobile.net/",
+          "YouCantSeeMe"
+              );
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
